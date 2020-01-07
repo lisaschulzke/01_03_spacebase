@@ -45,8 +45,8 @@
 			//TODO Punktestände
 
 			//TODO Invaders erzeugen und in Array (invaders) schreiben damit sie gerendet werden können
-
-
+			generateInvaders()
+			console.log(invaders);
 
 			//Obstacles erzeugen
 			obstacles.push({
@@ -65,7 +65,27 @@
 			});
 		}
 
-
+		function generateInvaders() {
+			//const jimp = require('jimp')
+			const xPos = Math.floor(Math.random() * 60);
+			const yPos = Math.floor(Math.random() * 20);
+			let invaderLines = []
+			let invaderLine;
+			
+			for (let y = 0; y < 5; y++) {
+				invaderLine = " ".repeat(10);
+				for (let x = 0; x < 10; x++) {
+					if (Math.random() >= 0.5) {
+						invaderLine = setCharsAt(invaderLine, xyToStringPos(x, 0), "#")
+						// renderStr = setCharsAt(renderStr, xyToStringPos(x + xPos, y + yPos), "#");
+						// renderStr = setCharsAt(renderStr, xyToStringPos(2 * 10 - x + xPos, y + yPos), "#");
+					}
+				}
+				//return invaderLine;
+				invaderLines.push(invaderLine);
+			}
+			invaders.push(invaderLines);
+		}
 
 
 		/*
@@ -158,20 +178,12 @@
 
 		function renderInvaders(invader, pos) {
 			//TODO Invaders rendern
-			//const jimp = require('jimp')
-			const xPos = Math.floor(Math.random() * 60);
-			const yPos = Math.floor(Math.random() * 20);
-
-			for (let x = 0; x < 10; x++) {
-				for (let y = 0; y < 5; y++) {
-					if (Math.random() >= 0.5) {
-						renderStr = setCharsAt(renderStr, xyToStringPos(x + xPos, y + yPos), "#");
-						renderStr = setCharsAt(renderStr, xyToStringPos(2 * 10 - x + xPos, y + yPos), "#");
-						
-					}
-				}
+			for (let i = 0; i < invaders.length; i++) {
+				for (let invadersNumber = invader.length[invaders]) {
+				};
+				//Zeilenweise in String schreiben
+				renderStr = setCharsAt(renderStr, xyToStringPos(x, 0 + i), invaders [i]);
 			}
-
 		}
 
 
