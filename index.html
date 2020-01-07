@@ -179,10 +179,14 @@
 		function renderInvaders(invader, pos) {
 			//TODO Invaders rendern
 			for (let i = 0; i < invaders.length; i++) {
-				for (let invadersNumber = invader.length[invaders]) {
-				};
-				//Zeilenweise in String schreiben
-				renderStr = setCharsAt(renderStr, xyToStringPos(x, 0 + i), invaders [i]);
+				for (var j = 0; j < invaders[i].length; j++) {
+					//Zeilenweise in String schreiben
+					//renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
+					//Zeilenweise in String schreiben
+					renderStr = setCharsAt(renderStr, xyToStringPos(i*20, 5 + j), invaders[i][j]);
+					//2 * width - x + xPos
+					renderStr = setCharsAt(renderStr, xyToStringPos(i*20+10, 5 + j),invaders[i][j].split("").reverse().join(""));
+				}
 			}
 		}
 
