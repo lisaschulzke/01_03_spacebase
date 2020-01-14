@@ -12,11 +12,11 @@
 			top: 50%;
 			-webkit-transform: translate(-50%, -50%);
 			transform: translate(-50%, -50%);
-			border: 1px solid gray;
+			border: 1px solid pink;
 		}
 
 		body {
-			color: white;
+			color: pink;
 			background-color: black;
 		}
 	</style>
@@ -38,11 +38,13 @@
 		let obstacles = [];
 		let run = 0;
 		let xoffset = 0;
+		let yoffset = 0;
 		let widthInvader = 5;
 		let heightInvader = 5;
 		let spacing = 3 * widthInvader;
 		let invaderRow = 70;
 		let startPointRow = 15;
+		let rightDirection = true;
 		/*
 		 *	SPIELELOGIK
 		 */
@@ -187,19 +189,28 @@
 			//Kugeln einen Schritt weiter bewegen, dann rendern
 			currentBullets.forEach((bullet) => {
 				bullet.y -= 1;
-				renderStr = setCharsAt(renderStr, xyToStringPos(bullet.x, bullet.y), "|");
+				renderStr = setCharsAt(renderStr, xyToStringPos(bullet.x, bullet.y), "♥");
 			})
 		}
 
 		function renderInvaders(invader, pos) {
 			//TODO Invaders rendern
 			run++
-			if (run => 25) {
+			if (run >= 2) {
 				run = 0;
-				xoffset++;
-			}
-			if (xoffset >= cols - invaderRow) {
-				xoffset = 0;
+
+				if (rightDirection === true) {
+					xoffset++;
+				} else {
+					xoffset--;
+				}
+				if (xoffset >= cols - invaderRow) {
+					yoffset++
+					rightDirection = false;
+				} else if (xoffset === 0) {
+					yoffset++;
+					rightDirection = true;
+				}
 			}
 			for (let i = 0; i < invaders.length; i++) {
 				for (var j = 0; j < invaders[i].length; j++) {
@@ -207,13 +218,14 @@
 					//Zeilenweise in String schreiben
 					//renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
 					//Zeilenweise in String schreiben
-					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + xoffset, heightInvader + j), invaders[i][
-					j]);
+					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + xoffset, heightInvader + j +
+						yoffset), invaders[i][
+						j
+					]);
 					//2 * width - x + xPos
-					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + widthInvader + xoffset, heightInvader + j),
-						invaders[i][j].split("")
-						.reverse().join(
-							""));
+					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + widthInvader + xoffset,
+							heightInvader + j + yoffset),
+						invaders[i][j].split("").reverse().join(""));
 				}
 			}
 		}
