@@ -41,7 +41,8 @@
 		let widthInvader = 5;
 		let heightInvader = 5;
 		let spacing = 3 * widthInvader;
-
+		let invaderRow = 70;
+		let startPointRow = 15;
 		/*
 		 *	SPIELELOGIK
 		 */
@@ -197,7 +198,7 @@
 				run = 0;
 				xoffset++;
 			}
-			if (xoffset >= 140 - 70) {
+			if (xoffset >= cols - invaderRow) {
 				xoffset = 0;
 			}
 			for (let i = 0; i < invaders.length; i++) {
@@ -206,10 +207,10 @@
 					//Zeilenweise in String schreiben
 					//renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
 					//Zeilenweise in String schreiben
-					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - 15 + xoffset, heightInvader + j), invaders[i][
+					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + xoffset, heightInvader + j), invaders[i][
 					j]);
 					//2 * width - x + xPos
-					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - 15 + widthInvader + xoffset, heightInvader + j),
+					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + widthInvader + xoffset, heightInvader + j),
 						invaders[i][j].split("")
 						.reverse().join(
 							""));
