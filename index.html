@@ -36,6 +36,11 @@
 		let currentBullets = [];
 		let invaders = [];
 		let obstacles = [];
+		let run = 0;
+		let xoffset = 0;
+		let widthInvader = 5;
+		let heightInvader = 5;
+		let spacing = 3 * widthInvader;
 
 		/*
 		 *	SPIELELOGIK
@@ -45,7 +50,16 @@
 			//TODO Punktestände
 
 			//TODO Invaders erzeugen und in Array (invaders) schreiben damit sie gerendet werden können
-			generateInvaders()
+			for (let i = 0; i < 5; i++) {
+				//const element = array[i];
+				generateInvaders();
+
+			}
+			/*generateInvaders();
+			generateInvaders();
+			generateInvaders();
+			generateInvaders();*/
+
 			console.log(invaders);
 
 			//Obstacles erzeugen
@@ -71,10 +85,10 @@
 			const yPos = Math.floor(Math.random() * 20);
 			let invaderLines = []
 			let invaderLine;
-			
-			for (let y = 0; y < 5; y++) {
-				invaderLine = " ".repeat(10);
-				for (let x = 0; x < 10; x++) {
+
+			for (let y = 0; y < heightInvader; y++) {
+				invaderLine = " ".repeat(5);
+				for (let x = 0; x < widthInvader; x++) {
 					if (Math.random() >= 0.5) {
 						invaderLine = setCharsAt(invaderLine, xyToStringPos(x, 0), "#")
 						// renderStr = setCharsAt(renderStr, xyToStringPos(x + xPos, y + yPos), "#");
@@ -178,14 +192,27 @@
 
 		function renderInvaders(invader, pos) {
 			//TODO Invaders rendern
+			run++
+			if (run => 25) {
+				run = 0;
+				xoffset++;
+			}
+			if (xoffset >= 140 - 70) {
+				xoffset = 0;
+			}
 			for (let i = 0; i < invaders.length; i++) {
 				for (var j = 0; j < invaders[i].length; j++) {
+
 					//Zeilenweise in String schreiben
 					//renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
 					//Zeilenweise in String schreiben
-					renderStr = setCharsAt(renderStr, xyToStringPos(i*20, 5 + j), invaders[i][j]);
+					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - 15 + xoffset, heightInvader + j), invaders[i][
+					j]);
 					//2 * width - x + xPos
-					renderStr = setCharsAt(renderStr, xyToStringPos(i*20+10, 5 + j),invaders[i][j].split("").reverse().join(""));
+					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - 15 + widthInvader + xoffset, heightInvader + j),
+						invaders[i][j].split("")
+						.reverse().join(
+							""));
 				}
 			}
 		}
