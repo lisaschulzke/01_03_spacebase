@@ -45,7 +45,13 @@
 		let invaderRow = 70;
 		let startPointRow = 15;
 		let rightDirection = true;
-		let explode = "0";
+		let explode = " ";
+		let explosionInvader = ["   #   ",
+				" #    ",
+				"#    ",
+				" #   ",
+				"  #  "
+			]
 		/*
 		 *	SPIELELOGIK
 		 */
@@ -102,11 +108,13 @@
 				//return invaderLine;
 				invaderLines.push(invaderLine);
 			}
-			invaderObj = {
-				appearance: invaderLines,
-				y: 0,
-				x:0
-			}
+			// invaderObj = {
+			// 	appearance: invaderLines,
+			// 	y: 0,
+			// 	x:0,
+			// 	exploded: 0,
+			// }
+			invaderObj = new Invader(widthInvader, heightInvader, 0, 0, invaderLines, 1);
 			invaders.push(invaderObj);
 		}
 
@@ -152,8 +160,8 @@
 		function renderBackground(rows, cols) {
 			//console.log("render "+cnt)
 			let str = ""
-			for (var i = 0; i < rows; i++) {
-				for (var j = 0; j < cols; j++) {
+			for (let i = 0; i < rows; i++) {
+				for (let j = 0; j < cols; j++) {
 					if (i == cnt + Math.round(Math.random() * 20)) str += "`"
 					else str += " "
 				}
@@ -171,7 +179,7 @@
 				"#######"
 			]
 
-			for (var i = 0; i < spaceship.length; i++) {
+			for (let i = 0; i < spaceship.length; i++) {
 				//Zeilenweise in String schreiben
 				renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
 			}
@@ -179,7 +187,7 @@
 
 		function renderObstacles() {
 			obstacles.forEach((obstacle) => {
-				for (var i = 0; i < obstacle.height; i++) {
+				for (let i = 0; i < obstacle.height; i++) {
 					//Zeilenweise in String schreiben
 					renderStr = setCharsAt(renderStr, xyToStringPos(obstacle.x, obstacle.y + i), obstacle.char.repeat(obstacle
 						.width));
@@ -190,9 +198,13 @@
 		function renderBullets() {
 			for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
 				for (let spaceId = 0; spaceId < invaders.length; spaceId++) {
-					if ((currentBullets[bulletId].y === invaders[spaceId].y) && (currentBullets[bulletId].x === invaders[spaceId].x)) {
-						//console.log("Treffer");
-						invaders[spaceId].appearance = [explode];
+					if ((currentBullets[bulletId].y <= invaders[spaceId].y + heightInvader) && 
+							(currentBullets[bulletId].x >= invaders[spaceId].x) &&
+							(currentBullets[bulletId].x < invaders[spaceId].x + widthInvader)) {
+							//console.log("Treffer");
+							invaders[spaceId].appearance = explosionInvader;
+							invaders[spaceId].exploded = new Date().getTime();
+							//invaders[spaceId].appearance = [explode];
 					}
 				}
 			}
@@ -233,7 +245,7 @@
 				}
 			}
 			for (let i = 0; i < invaders.length; i++) {
-				for (var j = 0; j < invaders[i].appearance.length; j++) {
+				for (let j = 0; j < invaders[i].appearance.length; j++) {
 
 					//Zeilenweise in String schreiben
 					//renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
@@ -248,11 +260,17 @@
 						invaders[i].appearance[j].split("").reverse().join(""));
 				}
 				invaders[i].y = yoffset;
-				invaders[i].x = xoffset;
+				invaders[i].x = spacing * (i + 1) - startPointRow + xoffset; //--> für einen invader machen, nicht für ganze reihe
 			}
 		}
 
-
+		function removeInvadersAnimation() {
+			for (let i = 0; i < invaders.length; i++) {
+				if(invaders[i].exploded != 0 && new Date().getTime() - invaders[i].exploded > 5) {
+					invaders[i].appearance = explode;
+				}
+			}
+		}
 
 		//Hauptrenderfunktion
 		function render() {
@@ -270,6 +288,9 @@
 
 			//Render Bullets
 			renderBullets(renderStr);
+
+			//Remove exploded invaders
+			removeInvadersAnimation();
 
 			//Gesamtergebnis anzeigen
 			document.getElementById("console").innerText = renderStr;
