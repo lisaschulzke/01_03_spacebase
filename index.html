@@ -46,11 +46,11 @@
 		let startPointRow = 15;
 		let rightDirection = true;
 		let explode = " ";
-		let explosionInvader = ["   #   ",
-				" #    ",
-				"#    ",
-				" #   ",
-				"  #  "
+		let explosionInvader = ["   |   ",
+				" /    ",
+				"|    ",
+				" \   ",
+				"  |  "
 			]
 		/*
 		 *	SPIELELOGIK
@@ -208,7 +208,8 @@
 					}
 				}
 			}
-			//}
+
+			
 			//TODO: Prüfen ob eine Kugel einen Invader oder ein Obstacle trifft, wenn ja Aktion auslösen
 			//if (bulletPosition == )
 
@@ -266,7 +267,7 @@
 
 		function removeInvadersAnimation() {
 			for (let i = 0; i < invaders.length; i++) {
-				if(invaders[i].exploded != 0 && new Date().getTime() - invaders[i].exploded > 5) {
+				if(invaders[i].exploded != 0 && new Date().getTime() - invaders[i].exploded > 1) {
 					invaders[i].appearance = explode;
 				}
 			}
