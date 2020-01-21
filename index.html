@@ -45,6 +45,7 @@
 		let invaderRow = 70;
 		let startPointRow = 15;
 		let rightDirection = true;
+		let explode = "0";
 		/*
 		 *	SPIELELOGIK
 		 */
@@ -101,7 +102,12 @@
 				//return invaderLine;
 				invaderLines.push(invaderLine);
 			}
-			invaders.push(invaderLines);
+			invaderObj = {
+				appearance: invaderLines,
+				y: 0,
+				x:0
+			}
+			invaders.push(invaderObj);
 		}
 
 
@@ -182,7 +188,17 @@
 		}
 
 		function renderBullets() {
+			for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
+				for (let spaceId = 0; spaceId < invaders.length; spaceId++) {
+					if ((currentBullets[bulletId].y === invaders[spaceId].y) && (currentBullets[bulletId].x === invaders[spaceId].x)) {
+						//console.log("Treffer");
+						invaders[spaceId].appearance = [explode];
+					}
+				}
+			}
+			//}
 			//TODO: Prüfen ob eine Kugel einen Invader oder ein Obstacle trifft, wenn ja Aktion auslösen
+			//if (bulletPosition == )
 
 			//Kugeln entfernen die am oberen Rand angekommen sind ohne Treffer
 			currentBullets = currentBullets.filter(bullet => bullet.y > 1);
@@ -198,12 +214,16 @@
 			run++
 			if (run >= 2) {
 				run = 0;
-
+				//Richtung festlegen, wie sich die Invader bewegen
+				//Wenn nach rechts, dann soll x-Wert zunehmen
 				if (rightDirection === true) {
 					xoffset++;
+					//Wenn sie nicht nach rechts gehen, dann soll der x-Wert abnehmen
 				} else {
 					xoffset--;
 				}
+				//Wenn xoffset kleiner gleich der Differenz aus SPalten und Inavderreihen ist, dann soll y größer werden
+				// so rutscht der Invader immer eins runter und geht dann weiter
 				if (xoffset >= cols - invaderRow) {
 					yoffset++
 					rightDirection = false;
@@ -213,20 +233,22 @@
 				}
 			}
 			for (let i = 0; i < invaders.length; i++) {
-				for (var j = 0; j < invaders[i].length; j++) {
+				for (var j = 0; j < invaders[i].appearance.length; j++) {
 
 					//Zeilenweise in String schreiben
 					//renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
 					//Zeilenweise in String schreiben
 					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + xoffset, heightInvader + j +
-						yoffset), invaders[i][
+						yoffset), invaders[i].appearance[
 						j
 					]);
 					//2 * width - x + xPos
 					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + widthInvader + xoffset,
 							heightInvader + j + yoffset),
-						invaders[i][j].split("").reverse().join(""));
+						invaders[i].appearance[j].split("").reverse().join(""));
 				}
+				invaders[i].y = yoffset;
+				invaders[i].x = xoffset;
 			}
 		}
 
