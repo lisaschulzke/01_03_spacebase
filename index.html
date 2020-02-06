@@ -24,11 +24,15 @@
 </head>
 
 <body>
+	<audio id="music" loop muted="muted" autoplay="">
+			<source src="starwars.ogg" type="audio/ogg">
+	</audio>
 	<pre id="console">
   	<!-- Hier landet später der Output aus Javascript -->
   </pre>
 	<script src="classes.js"></script>
 	<script>
+
 		let renderStr = "";
 		let rows = 50;
 		let cols = 140;
@@ -60,9 +64,16 @@
 			"  ||  "
 		]
 
-		let level = 1;
-
+		let spaceship = ["   #   ",
+			"#######",
+			"#######"
+		]
+		let showOnlyOnce = true;
+		let level = 3;
 		let randomBulletTime;
+		// var audio = new Audio('./starwars.ogg');
+		var audio = document.getElementById('music');
+
 		/*
 		 *	SPIELELOGIK
 		 */
@@ -83,13 +94,14 @@
 			score = 0;
 			obstaclesId = 0;
 			invaderRow = 70;
+			
 			//TODO Invaders erzeugen und in Array (invaders) schreiben damit sie gerendet werden können
 			for (let i = 0; i < numInvader; i++) {
 				//const element = array[i];
 				generateInvaders();
 				//invaderRow = ((((widthInvader * 2) + spacing) * invaders.length) - spacing);
 			}
-			
+
 			//Obstacles erzeugen
 			obstacles.push({
 				x: Math.round(cols / 2) - 5,
@@ -182,11 +194,11 @@
 				//Leertase - Feuer!
 				fireBullet();
 			} else if (keyCode === 40) {
-				if(level > 1){
+				if (level > 1) {
 					level--;
 				}
-			} else if(keyCode === 38){
-				if(level < 3){
+			} else if (keyCode === 38) {
+				if (level < 3) {
 					level++;
 				}
 			}
@@ -224,10 +236,6 @@
 
 		function renderSpaceship(posX, posY) {
 			//Spaceship-Array
-			let spaceship = ["   #   ",
-				"#######",
-				"#######"
-			]
 
 			for (let i = 0; i < spaceship.length; i++) {
 				//Zeilenweise in String schreiben
@@ -274,29 +282,6 @@
 				}
 			}
 
-			//_______________
-
-
-			for (let spaceId = 0; spaceId < invaders.length; spaceId++) {
-					if ((currentBullets[bulletId].x >= invaders[spaceId].x) &&
-						(currentBullets[bulletId].x <= invaders[spaceId].x + widthInvader + 5) &&
-						(invaders[spaceId].x != 0) &&
-						(invaders[spaceId].appearance != explode) &&
-						(currentBullets[bulletId].y === invaders[spaceId].y + heightInvader)) {
-						invaders[spaceId].appearance = explosionInvader;
-						invaders[spaceId].exploded = new Date().getTime();
-						score++;
-					}
-				}
-			}
-
-
-			// _________________
-
-
-
-
-
 			//TODO:
 			for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
 				for (let obstaclesId = 0; obstaclesId < obstacles.length; obstaclesId++)
@@ -321,17 +306,17 @@
 		}
 
 		function renderBulletsInvaders() {
-			/*for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
-				for (let spaceId = 0; spaceId < invaders.length; spaceId++) {
-					if ((currentBullets[bulletId].x >= invaders[spaceId].x) &&
-						(currentBullets[bulletId].x <= invaders[spaceId].x + widthInvader + 5) &&
-						(invaders[spaceId].x != 0) &&
-						(invaders[spaceId].appearance != explode) &&
-						(currentBullets[bulletId].y === invaders[spaceId].y + heightInvader)) {
-						invaders[spaceId].appearance = explosionInvader;
-						invaders[spaceId].exploded = new Date().getTime();
-						score++;
-						console.log(score);
+			for (let bulletId = 0; bulletId < currentBulletsInvaders.length; bulletId++) {
+				// console.log(currentBulletsInvaders[bulletId].x);
+				// console.log(currentBulletsInvaders[0].x);
+
+				//TODO: eine Toleranz hinzufügen, sodass das ganze Spaceship getroffen wird
+				if (currentBulletsInvaders[bulletId].y >= 47 && currentBulletsInvaders[bulletId].x === spaceshipPos) {
+					console.log("invader bullet hit spaceship");
+					if (showOnlyOnce) {
+						showOnlyOnce = false;
+						window.alert("You lose the level!");
+						newGame();
 					}
 				}
 			}
@@ -341,10 +326,10 @@
 					if ((currentBulletsInvaders[bulletId].x >= obstacles[obstaclesId].x) &&
 						(currentBulletsInvaders[bulletId].x <= obstacles[obstaclesId].x + obstacles[obstaclesId].width) &&
 						(currentBulletsInvaders[bulletId].y === obstacles[obstaclesId].y + obstacles[obstaclesId].height)) {
-						console.log("bullet hit obstacle")
+						// console.log("invader bullet hit obstacle")
 						currentBulletsInvaders.splice(bulletId, 1);
 					}
-			}*/
+			}
 
 			//Kugeln entfernen die am oberen Rand angekommen sind ohne score
 			currentBulletsInvaders = currentBulletsInvaders.filter(bullet => bullet.y <= rows);
@@ -418,8 +403,8 @@
 		}
 
 		function randomInvaderBullets() {
-			
-			if(new Date().getTime() > randomBulletTime){
+
+			if (new Date().getTime() > randomBulletTime) {
 				fireBulletInvaders();
 				setupInvaderBulletTime();
 			}
@@ -428,21 +413,19 @@
 		function setupInvaderBulletTime() {
 			let max = 10;
 			let min = 5;
-			if(level === 2){
+			if (level === 2) {
 				min = 3;
 				max = 6;
-			}else if(level === 3){
+			} else if (level === 3) {
 				min = 1;
 				max = 2;
 			}
-			let randomTime = Math.floor(Math.random()*(max-min+1)+min) * 1000;
+			let randomTime = Math.floor(Math.random() * (max - min + 1) + min) * 1000;
 			randomBulletTime = new Date().getTime() + randomTime;
 		}
 
 		//Hauptrenderfunktion
 		function render() {
-
-
 
 			//Render Background
 			renderStr = renderBackground(rows, cols);
@@ -468,7 +451,7 @@
 			//Remove exploded invaders
 			removeInvadersAnimation();
 
-			// TODO: comment!
+			// TODO: comment
 			randomInvaderBullets();
 
 			//Gesamtergebnis anzeigen
@@ -477,7 +460,13 @@
 
 		//Es geht los - alle 40 Millisekunden rendern
 		newGame();
-		setInterval(render, 40)
+		setInterval(render, 40);
+		setTimeout(()=>{
+			audio.play();
+			audio.muted = false;
+		},1000);
+		
+
 	</script>
 </body>
 
