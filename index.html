@@ -43,8 +43,11 @@
 		let yoffset = 0;
 		let widthInvader = 5;
 		let heightInvader = 5;
+		const numInvader = 5
 		let spacing = 3 * widthInvader;
+		// davor 70, ohne glitchen
 		let invaderRow = 70;
+		//let invaderRow = ((((widthInvader * 2) + spacing) * invaders.length) - spacing); // (((BreiteInvader*2)+spacing)*AnzahlInvaders)-spacing
 		let startPointRow = 15;
 		let rightDirection = true;
 		let explode = " ";
@@ -69,7 +72,7 @@
 			invaders = [];
 			obstaclesId = 0;
 			//TODO Invaders erzeugen und in Array (invaders) schreiben damit sie gerendet werden können
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < numInvader; i++) {
 				//const element = array[i];
 				generateInvaders();
 
@@ -367,17 +370,14 @@
 				if (invaders[i].exploded != 0 && new Date().getTime() - invaders[i].exploded > 1) {
 					invaders[i].appearance = explode;
 					//Nur löschen wenn ganz links oder ganz rechts
-					// const index = array.indexOf(5);
-			
-					// if (invaders[i].exploded === invaders[i].index(1)) {
+					if (i === 0 || i === invaders.length-1) {
 						invaders.splice(i, 1);
-
 					}
 					
 					//Wenn ganz links, reihe um eine Invaderbreite nach rechts schieben
 				}
 			}
-	//}
+	}
 
 		//Hauptrenderfunktion
 		function render() {
