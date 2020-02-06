@@ -53,4 +53,4 @@ _(Achtung, dieser Teil liest sich jetzt sehr ähnlich zur Funktionsbeschreibung 
 Was noch fehlt, und was die nächsten Schritte wären um es ggf. umzusetzen:
 * Erweiterung der Party um Musik
 * Berücksichtung individueller Verträglichkeiten von Bier in der Person-Klasse
-* etc...
+* Obstacles move in higher level
