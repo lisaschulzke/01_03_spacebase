@@ -32,10 +32,15 @@ Im nachfolgenden Absatz wird auf die wichtigen Funktionen des Projekts eingegang
 ### Zentrale Funktionen
 
 `generateInvaders()`: Eine Funktion die ein Array von Personen entgegennimmt, und diese dann im angegebenen Intervall Bier trinken lässt. Nach jedem Durchlauf durch das Biertrinken (durch Aufruf von drinkBeer mit einem neu erzeugten Bier-Objekt) wird überprüft, ob die Anzahl der betrunkenen Personen größer 0 ist. Wenn dies eintritt, wird das Intervall bei jedem Durchlauf auf die doppelte Länge verlängert. Die Funktion endet in ihrer Ausführung dann wenn alle Personen isDrunk = true zurückgeben, oder wenn das Interval größer als 1 Stunde wird. Wird die Funktion mit nur einer Person im Array aufgerufen, wird eine Warnmeldung ausgegeben, um versehentliches Trinken alleine zu vermeiden. 
+
 `renderUI()`:
+
 `renderBullets()`:
+
 `renderInvaders(invader, pos)`:
+
 `removeInvadersAnimation()`: Da ich die Invaders nicht einfach nur verschwinden lassen wollte, fügte ich eine Funktion hinzu, die beim Treffen der Invader durch die Bullets eine Animation ausführt. Dies passiert mithilfe eine For-Schleife und einer Bedingung (dass die Invader bereits nicht zuvor getroffen worden sind und diese aber getroffen wurden), die erfüllt sein muss.
+
 `render()`: Diese Funktion sorgt dafür, dass die oben generierten Render-Funktionen ausgeführt werden. Somit werden diese an dieser Stelle aufgerufen und ausgeführt.
 _(Achtung: Hier werden nur Funktionen beschrieben, die eine zentrale Rolle einnehmen.)_
 
