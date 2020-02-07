@@ -219,22 +219,22 @@
 			if (score === 5) {
 				renderStr = setCharsAt(renderStr, xyToStringPos(3, 20),
 					"██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗ ██████╗ ███╗   ██╗    ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗   "
-					)
+				)
 				renderStr = setCharsAt(renderStr, xyToStringPos(3, 21),
 					"╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██╔═══██╗████╗  ██║    ╚══██╔══╝██║  ██║██╔════╝    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝   "
-					)
+				)
 				renderStr = setCharsAt(renderStr, xyToStringPos(3, 22),
 					" ╚████╔╝ ██║   ██║██║   ██║    ██║ █╗ ██║██║   ██║██╔██╗ ██║       ██║   ███████║█████╗      ██║  ███╗███████║██╔████╔██║█████╗     "
-					)
+				)
 				renderStr = setCharsAt(renderStr, xyToStringPos(3, 23),
 					"  ╚██╔╝  ██║   ██║██║   ██║    ██║███╗██║██║   ██║██║╚██╗██║       ██║   ██╔══██║██╔══╝      ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝     "
-					)
+				)
 				renderStr = setCharsAt(renderStr, xyToStringPos(3, 24),
 					"   ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝╚██████╔╝██║ ╚████║       ██║   ██║  ██║███████╗    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██╗"
-					)
+				)
 				renderStr = setCharsAt(renderStr, xyToStringPos(3, 25),
 					"   ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═══╝       ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝"
-					)
+				)
 				//window.alert("You won the level!");
 				newGame();
 				pause = true;
@@ -276,19 +276,6 @@
 			});
 		}
 
-		/*function renderBullets() {
-			for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
-				for (let spaceId = 0; spaceId < invaders.length; spaceId++) {
-					if ((currentBullets[bulletId].y === invaders[spaceId].y + heightInvader) &&
-						(currentBullets[bulletId].x >= invaders[spaceId].x) &&
-						(currentBullets[bulletId].x <= invaders[spaceId].x + widthInvader)) {
-						//console.log("score");
-						invaders[spaceId].appearance = explosionInvader;
-						invaders[spaceId].exploded = new Date().getTime();
-						//invaders[spaceId].appearance = [explode];
-					}
-				}
-			}*/
 		function renderBullets() {
 			//Prüfen ob eine Kugel einen Invader trifft, wenn ja Aktion auslösen und score hochzählen
 			for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
@@ -311,7 +298,6 @@
 					if ((currentBullets[bulletId].x >= obstacles[obstaclesId].x) &&
 						(currentBullets[bulletId].x <= obstacles[obstaclesId].x + obstacles[obstaclesId].width) &&
 						(currentBullets[bulletId].y === obstacles[obstaclesId].y + obstacles[obstaclesId].height)) {
-						console.log("bullet hit obstacle")
 						currentBullets.splice(bulletId, 1);
 					}
 			}
@@ -331,35 +317,29 @@
 		//rendert die Bullets von den Invader
 		function renderBulletsInvaders() {
 			for (let bulletId = 0; bulletId < currentBulletsInvaders.length; bulletId++) {
-
-				//TODO: eine Toleranz hinzufügen, sodass das ganze Spaceship getroffen wird
-				//const widthSpaceShip = Math.sqrt(Math.pow((fireBulletInvaders.posX + xoffset - (spaceshipPos + 3)), 2) + Math.pow((fireBulletInvaders.posY + yoffset - (rows - 2)), 2));
 				if (currentBulletsInvaders[bulletId].y >= 47 && (currentBulletsInvaders[bulletId].x === spaceshipPos)) {
-					console.log("invader bullet hit spaceship");
-					if (showOnlyOnce) {
-						showOnlyOnce = false;
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 20),
-							"██╗   ██╗ ██████╗ ██╗   ██╗    ██╗      ██████╗ ███████╗████████╗    ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗   "
-						)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 21),
-							"╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║     ██╔═══██╗██╔════╝╚══██╔══╝    ╚══██╔══╝██║  ██║██╔════╝    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝   "
-						)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 22),
-							" ╚████╔╝ ██║   ██║██║   ██║    ██║     ██║   ██║███████╗   ██║          ██║   ███████║█████╗      ██║  ███╗███████║██╔████╔██║█████╗     "
-						)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 23),
-							"  ╚██╔╝  ██║   ██║██║   ██║    ██║     ██║   ██║╚════██║   ██║          ██║   ██╔══██║██╔══╝      ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝     "
-						)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 24),
-							"   ██║   ╚██████╔╝╚██████╔╝    ███████╗╚██████╔╝███████║   ██║          ██║   ██║  ██║███████╗    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██╗"
-						)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 25),
-							"   ╚═╝    ╚═════╝  ╚═════╝     ╚══════╝ ╚═════╝ ╚══════╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝"
-						)
-						//window.alert("You lost the game.")
-						pause = true;
 
-					}
+					renderStr = setCharsAt(renderStr, xyToStringPos(3, 20),
+						"██╗   ██╗ ██████╗ ██╗   ██╗    ██╗      ██████╗ ███████╗████████╗    ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗   "
+					)
+					renderStr = setCharsAt(renderStr, xyToStringPos(3, 21),
+						"╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║     ██╔═══██╗██╔════╝╚══██╔══╝    ╚══██╔══╝██║  ██║██╔════╝    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝   "
+					)
+					renderStr = setCharsAt(renderStr, xyToStringPos(3, 22),
+						" ╚████╔╝ ██║   ██║██║   ██║    ██║     ██║   ██║███████╗   ██║          ██║   ███████║█████╗      ██║  ███╗███████║██╔████╔██║█████╗     "
+					)
+					renderStr = setCharsAt(renderStr, xyToStringPos(3, 23),
+						"  ╚██╔╝  ██║   ██║██║   ██║    ██║     ██║   ██║╚════██║   ██║          ██║   ██╔══██║██╔══╝      ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝     "
+					)
+					renderStr = setCharsAt(renderStr, xyToStringPos(3, 24),
+						"   ██║   ╚██████╔╝╚██████╔╝    ███████╗╚██████╔╝███████║   ██║          ██║   ██║  ██║███████╗    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██╗"
+					)
+					renderStr = setCharsAt(renderStr, xyToStringPos(3, 25),
+						"   ╚═╝    ╚═════╝  ╚═════╝     ╚══════╝ ╚═════╝ ╚══════╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝"
+					)
+					//window.alert("You lost the game.")
+					pause = true;
+
 				}
 			}
 
@@ -432,12 +412,6 @@
 			for (let i = 0; i < invaders.length; i++) {
 				if (invaders[i].exploded != 0 && new Date().getTime() - invaders[i].exploded > 1) {
 					invaders[i].appearance = explode;
-					//Nur löschen wenn ganz links oder ganz rechts
-					// if (i === 0 || i === invaders.length - 1) {
-					// 	invaders.splice(i, 1);
-					// }
-
-					//Wenn ganz links, reihe um eine Invaderbreite nach rechts schieben
 				}
 			}
 		}
