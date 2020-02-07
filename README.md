@@ -2,7 +2,7 @@
 
 Dieses Projekt entstand im Rahmen der Programmiersprachen-Vorlesung im ersten Semester.
 Es soll ein Nachbau des ursprünglichen Space Invader-Spiels sein und somit für den Nutzer interaktiv sein.
-Neben dem Erstellen der Spielelogik beinhaltet das Projekt außerdem auch die Darstellung der Invaders, der Hindernisse und des Space ships.
+Neben dem Erstellen der Spielelogik beinhaltet das Projekt außerdem auch die Darstellung der Invaders, der Hindernisse und des Spaceships.
 Als Inspiration diente hierfür ein Youtube-Video der Space Invaders mit dem Ziel, dies individuell anzupassen und eigene Präferenzen einzubauen.
 Zu Beginn wurde das Template des Dozenten genutzt, das bereits das Spielfeld, die Hindernisse und das Spaceships generiert hat.
 
@@ -11,7 +11,7 @@ Zu Beginn wurde das Template des Dozenten genutzt, das bereits das Spielfeld, di
 ## Usage / Benutzung
 
 Das Spiel lässt sich nach einem Download von GitHub bereits im Browser spielen. Für ein optimaleres Spieleerlebnis empfehle ich den Chrome Browser zu benutzen.
-Bereits beim Laden der Seite durch aufrufen der HTML-file öffnet sich ein neues Spiel, man kann also direkt loslegen und das Spiel spielen.
+Bereits beim Laden der Seite durch aufrufen der HTML-file öffnet sich ein neues Spiel, man kann also direkt loslegen und das Spiel spielen. Es sollte ebenfalls Musik ertönen.
 
 #### Steuerung Spaceship: 
 Pfeiltaste links: nach links bewegen
@@ -50,7 +50,7 @@ Im nachfolgenden Absatz wird auf die wichtigen Funktionen des Projekts eingegang
 
 `renderBullets()`: Diese Funktion rendert die Bullets, die das Spaceship auf den Invader abfeuert.
 
-`renderInvaders(invader, pos)`: Diese Fubktion rendert die Invader und sorgt dafür, dass sie sich auf dem Spiele-Canvas von links nach rechts bewegen, am Rand eine Spalte nach unten gehen und sich dann von rechts nach links bewegen.
+`renderInvaders(invader, pos)`: Diese Funktion rendert die Invader und sorgt dafür, dass sie sich auf dem Spiele-Canvas von links nach rechts bewegen, am Rand eine Spalte nach unten gehen und sich dann von rechts nach links bewegen.
 
 `removeInvadersAnimation()`: Da ich die Invaders nicht einfach nur verschwinden lassen wollte, fügte ich eine Funktion hinzu, die beim Treffen der Invader durch die Bullets eine Animation ausführt. Dies passiert mithilfe eine For-Schleife und einer Bedingung (dass die Invader bereits nicht zuvor getroffen worden sind und diese aber getroffen wurden), die erfüllt sein muss.
 
@@ -60,7 +60,7 @@ Im nachfolgenden Absatz wird auf die wichtigen Funktionen des Projekts eingegang
 ### Beschreibung des Spielablaufs
 
 Eine zentrale Funktion in der Datei ist die `render()`-Funktion, sie erstellt bzw. rendert die gesamten Funktionen und lässt alles sichtbar werden. Diese Funktion ruft hauptsächlich die bereits vorangegangenen Render-Funktionen auf, welche meist eine generate-Funktion beinhalten. Auf diese Weise werden die einzelnen Komponenten, wie beispielsweise auch die Invader oder das UI (score und level) sichtbar gemacht. Durch die Interaktion mit dem Spiel wird die Musik ausgelöst und spielt dann so lange ab, bis das Fenster geschlossen wird oder das Spiel neu gestartet wird, dann läuft die Musik wieder von Anfang an ab.
-Während des Spielens bewegt der Nutzer das Spaceship durch drücken der rechten bzw. linken Pfeiltaste. Dies passiert durch die Komponenten keyCode, addEventListener `('keydown', (event) =>{}` und der SpaceshipPos. So wird auf der x-Achse einmal der Wert verringert durch drücken der Taste (links) und einmal erhöht (rechts). Durch drücken der Leertaste werden die Bullets abgefeuert. Dies passiert auch durch ein keydown-Event mit dem keyCode.
+Während des Spielens bewegt der Nutzer das Spaceship durch drücken der rechten bzw. linken Pfeiltaste. Dies passiert durch die Komponenten `keyCode`, `addEventListener` `('keydown', (event) =>{}` und der `SpaceshipPos`. So wird auf der x-Achse einmal der Wert verringert durch drücken der Taste (links) und einmal erhöht (rechts). Durch drücken der Leertaste werden die Bullets abgefeuert. Dies passiert auch durch ein keydown-Event mit dem keyCode.
 Indem der Nutzer die Pfeiltaste oben drückt, spielt er ein Level höher, durch drücken der Pfeiltaste nach unten, ein Level niedriger. Dies passiert ebenfalls durch den KeyCode und dem keydown-Event. Dies ist zum einen mit der Funktion `setupInvaderBulletTime()` verbunden, sowie mit dem keydown-Event selbst, das hoch- bzw. runterzählt.
 
 Oben links in der Ecke ist zudem ein Zähler, der den Score des Nutzers zählt. Der Nutzer bekommt pro abgeschossenem Invader einen Punkt. Somit hängt der Zähler auch mit der Funktion zusammen, die für das Abschießen der Invader verantwortlich ist (`renderBullets()`). Gleichzeitig können die Invader auch das Spaceship abschießen. Dies passiert zufällig durch die Funktion `setupInvaderBulletTime()`, die je nach Level eine höhere Intervallspanne oder eben eine kleinere Intervallspanne berechnet. Dies hängt dann wiederum auch mit der Auswahl des Levels zusammen.
