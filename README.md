@@ -12,7 +12,16 @@ Zu Beginn wurde das Template des Dozenten genutzt, das bereits das Spielfeld, di
 
 Das Spiel lässt sich nach einem Download von GitHub bereits im Browser spielen. Für ein optimaleres Spieleerlebnis empfehle ich den Chrome Browser zu benutzen.
 Bereits beim Laden der Seite durch aufrufen der HTML-file öffnet sich ein neues Spiel, man kann also direkt loslegen und das Spiel spielen.
-Die Steuerung des Space Ships erfolgt durch die Pfeiltasten "rechts" und "links", mit der Leertaste feuert das Space ship Kugeln ab.
+
+#### Steuerung Spaceship: 
+Pfeiltaste links: nach links bewegen
+Pfeiltaste rechts: nach rechts bewegen
+Leertaste: Bullets abfeuern
+
+#### Steuerung Spiel:
+esc: neues Spiel Starten
+Pfeiltaste hoch: höheres Level wählen
+Pfeiltaste unten: niedrigeres Level wählen
 
 ## Structure / Aufbau
 
@@ -44,16 +53,22 @@ Im nachfolgenden Absatz wird auf die wichtigen Funktionen des Projekts eingegang
 `render()`: Diese Funktion sorgt dafür, dass die oben generierten Render-Funktionen ausgeführt werden. Somit werden diese an dieser Stelle aufgerufen und ausgeführt.
 _(Achtung: Hier werden nur Funktionen beschrieben, die eine zentrale Rolle einnehmen.)_
 
-Nach der Beschreibung der elementaren Bestandteile wird aus der Vogelperspektive nochmals beschrieben, welche Gesamtzustände euer System durchlaufen kann. In diesem Fall würde der User zunächst 0 bis n Personen erzeugen, und diese mit haveParty() zum Bier trinken bringen.  Dabei wird innerhalb von haveParty nacheinander für jede Person drinkBeer() aufgerufen, unter Benutzung von neuen Bier-Objekten. Nach Ende der Party muss das Programm neu gestartet werden um die Zustände zurückzusetzen.
 
-Eine zentrale Funktion in der Datei ist die `render()`-Funktion, sie erstellt bzw. rendert die gesamten Funktionen und lässt alles sichtbar werden.
+### Beschreibung des Spielablaufs
+//Nach der Beschreibung der elementaren Bestandteile wird aus der Vogelperspektive nochmals beschrieben, welche Gesamtzustände euer System durchlaufen kann. In diesem Fall würde der User zunächst 0 bis n Personen erzeugen, und diese mit haveParty() zum Bier trinken bringen.  Dabei wird innerhalb von haveParty nacheinander für jede Person drinkBeer() aufgerufen, unter Benutzung von neuen Bier-Objekten. Nach Ende der Party muss das Programm neu gestartet werden um die Zustände zurückzusetzen.
 
-_(Achtung, dieser Teil liest sich jetzt sehr ähnlich zur Funktionsbeschreibung von haveParty - das liegt daran dass es im Beispiel nur eine zentrale Funktion gibt. Ihr habt aber mehrere die zusammenspielen!)._
+Eine zentrale Funktion in der Datei ist die `render()`-Funktion, sie erstellt bzw. rendert die gesamten Funktionen und lässt alles sichtbar werden. Diese Funktion ruft hauptsächlich die bereits vorangegangenen Render-Funktionen auf, welche meist eine generate-Funktion beinhalten. Auf diese Weise werden die einzelnen Komponenten, wie beispielsweise auch die Invader oder das UI (score und level) sichtbar gemacht. Durch die Interaktion mit dem Spiel wird die Musik ausgelöst und spielt dann so lange ab, bis das Fenster geschlossen wird oder das Spiel neu gestartet wird, dann läuft die Musik wieder von Anfang an ab.
+Während des Spielens bewegt der Nutzer das Spaceship durch drücken der rechten bzw. linken Pfeiltaste. Dies passiert durch die Komponenten keyCode, addEventListener `('keydown', (event) =>{}` und der SpaceshipPos. So wird auf der x-Achse einmal der Wert verringert durch drücken der Taste (links) und einmal erhöht (rechts). Durch drücken der Leertaste werden die Bullets abgefeuert. Dies passiert auch durch ein keydown-Event mit dem keyCode.
+Indem der Nutzer die Pfeiltaste oben drückt, spielt er ein Level höher, durch drücken der Pfeiltaste nach unten, ein Level niedriger. Dies passiert ebenfalls durch den KeyCode und dem keydown-Event. Dies ist zum einen mit der Funktion `setupInvaderBulletTime()` verbunden, sowie mit dem keydown-Event selbst, das hoch- bzw. runterzählt.
+
+Oben links in der Ecke ist zudem ein Zähler, der den Score des Nutzers zählt. Der Nutzer bekommt pro abgeschossenem Invader einen Punkt. Somit hängt der Zähler auch mit der Funktion zusammen, die für das Abschießen der Invader verantwortlich ist (`renderBullets()`).
+
 
 ## ToDos
 
-Was noch fehlt, und was die nächsten Schritte wären um es ggf. umzusetzen:
+Um das Erlebnis des Spiels zu verbessern, müssten folgende Dinge noch verbessert werden:
 * Obstacles move in higher level, sodass nicht nur die Bullets von den Invadern mehr oder höher frequentiert sind, sondern auch das Hindernis sich bewegt. Somit wäre ein noch deutlicherer Unterschied zwischen den Leveln bemerkbar.
 * Länge der Invaderreihe dynamisch machen, da so dann auch der ganz rechte Invader bis zum ganz linken Rand gehen würde.
 * Range zum Abschießen des Spaceships definieren (aktuell lässt ess ich nur am ersten hashtag abschießen).
+* Bereits abgeschossene invader sollten nicht mehr schießen können
 
