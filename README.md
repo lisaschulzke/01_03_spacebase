@@ -6,7 +6,7 @@ Neben dem Erstellen der Spielelogik beinhaltet das Projekt außerdem auch die Da
 Als Inspiration diente hierfür ein Youtube-Video der Space Invaders mit dem Ziel, dies individuell anzupassen und eigene Präferenzen einzubauen.
 Zu Beginn wurde das Template des Dozenten genutzt, das bereits das Spielfeld, die Hindernisse und das Spaceships generiert hat.
 
--SCREENSHOT-
+![](link)
 
 ## Usage / Benutzung
 
