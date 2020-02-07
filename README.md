@@ -35,9 +35,9 @@ Im nachfolgenden Absatz wird auf die wichtigen Funktionen des Projekts eingegang
 
 `renderUI()`: Diese Funktion rendert die User Interface des Spiels. Diese Fubktion wurde hauptsächlich dafür angelegt, um den aktuellen Punktestand anzuzeigen, sowie auch den Window-alert, dass das Spiel gewonnen wurde.
 
-`renderBullets()`:
+`renderBullets()`: Diese Funktion rendert die Bullets, die das Spaceship auf den Invader abfeuert.
 
-`renderInvaders(invader, pos)`:
+`renderInvaders(invader, pos)`: Diese Fubktion rendert die Invader und sorgt dafür, dass sie sich auf dem Spiele-Canvas von links nach rechts bewegen, am Rand eine Spalte nach unten gehen und sich dann von rechts nach links bewegen.
 
 `removeInvadersAnimation()`: Da ich die Invaders nicht einfach nur verschwinden lassen wollte, fügte ich eine Funktion hinzu, die beim Treffen der Invader durch die Bullets eine Animation ausführt. Dies passiert mithilfe eine For-Schleife und einer Bedingung (dass die Invader bereits nicht zuvor getroffen worden sind und diese aber getroffen wurden), die erfüllt sein muss.
 
@@ -46,13 +46,14 @@ _(Achtung: Hier werden nur Funktionen beschrieben, die eine zentrale Rolle einne
 
 Nach der Beschreibung der elementaren Bestandteile wird aus der Vogelperspektive nochmals beschrieben, welche Gesamtzustände euer System durchlaufen kann. In diesem Fall würde der User zunächst 0 bis n Personen erzeugen, und diese mit haveParty() zum Bier trinken bringen.  Dabei wird innerhalb von haveParty nacheinander für jede Person drinkBeer() aufgerufen, unter Benutzung von neuen Bier-Objekten. Nach Ende der Party muss das Programm neu gestartet werden um die Zustände zurückzusetzen.
 
-Eine zentrale Funktion in der Datei ist die render()-Funktion, sie erstellt bzw. rendert die gesamten Funktionen und lässt alles sichtbar werden.
+Eine zentrale Funktion in der Datei ist die `render()`-Funktion, sie erstellt bzw. rendert die gesamten Funktionen und lässt alles sichtbar werden.
 
 _(Achtung, dieser Teil liest sich jetzt sehr ähnlich zur Funktionsbeschreibung von haveParty - das liegt daran dass es im Beispiel nur eine zentrale Funktion gibt. Ihr habt aber mehrere die zusammenspielen!)._
 
 ## ToDos
 
 Was noch fehlt, und was die nächsten Schritte wären um es ggf. umzusetzen:
-* Erweiterung der Party um Musik
-* Berücksichtung individueller Verträglichkeiten von Bier in der Person-Klasse
-* Obstacles move in higher level
+* Obstacles move in higher level, sodass nicht nur die Bullets von den Invadern mehr oder höher frequentiert sind, sondern auch das Hindernis sich bewegt. Somit wäre ein noch deutlicherer Unterschied zwischen den Leveln bemerkbar.
+* Länge der Invaderreihe dynamisch machen, da so dann auch der ganz rechte Invader bis zum ganz linken Rand gehen würde.
+* Range zum Abschießen des Spaceships definieren (aktuell lässt ess ich nur am ersten hashtag abschießen).
+
