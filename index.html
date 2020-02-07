@@ -24,6 +24,7 @@
 </head>
 
 <body>
+	<!-- Hier wurde die Hintergrundmusik eingebettet, die dann im script tag aufgerufen wird-->
 	<audio id="music" loop muted="muted" autoplay="">
 		<source src="spacemusic.ogg" type="audio/ogg">
 	</audio>
@@ -215,8 +216,9 @@
 		function renderUI() {
 			renderStr = setCharsAt(renderStr, xyToStringPos(5, 0), "Score: " + score);
 			renderStr = setCharsAt(renderStr, xyToStringPos(5, 1), "Level: " + level);
-
+			//Wenn der Nutzer den Score 5 hat, hat er das Spiel gewonnen
 			if (score === 5) {
+				//Rendern des Gewonnen-Screens
 				renderStr = setCharsAt(renderStr, xyToStringPos(3, 20),
 					"██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗ ██████╗ ███╗   ██╗    ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗   "
 				)
@@ -235,7 +237,6 @@
 				renderStr = setCharsAt(renderStr, xyToStringPos(3, 25),
 					"   ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═══╝       ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝"
 				)
-				//window.alert("You won the level!");
 				newGame();
 				pause = true;
 			}
@@ -243,7 +244,6 @@
 
 
 		function renderBackground(rows, cols) {
-			//console.log("render "+cnt)
 			let str = ""
 			for (let i = 0; i < rows; i++) {
 				for (let j = 0; j < cols; j++) {
@@ -258,8 +258,6 @@
 		}
 
 		function renderSpaceship(posX, posY) {
-			//Spaceship-Array
-
 			for (let i = 0; i < spaceship.length; i++) {
 				//Zeilenweise in String schreiben
 				renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
@@ -275,7 +273,7 @@
 				}
 			});
 		}
-
+		//Rendern der Bullets und prüfen, ob sie einen Invader treffen, falls ja, einen Punkt hochzählen
 		function renderBullets() {
 			//Prüfen ob eine Kugel einen Invader trifft, wenn ja Aktion auslösen und score hochzählen
 			for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
@@ -306,7 +304,6 @@
 
 			//Kugeln entfernen die am oberen Rand angekommen sind ohne score
 			currentBullets = currentBullets.filter(bullet => bullet.y > 1);
-			//Kugeln einen Schritt weiter bewegen, dann rendern
 			currentBullets.forEach((bullet) => {
 				bullet.y -= 1;
 				renderStr = setCharsAt(renderStr, xyToStringPos(bullet.x, bullet.y), "♥");
@@ -318,7 +315,7 @@
 		function renderBulletsInvaders() {
 			for (let bulletId = 0; bulletId < currentBulletsInvaders.length; bulletId++) {
 				if (currentBulletsInvaders[bulletId].y >= 47 && (currentBulletsInvaders[bulletId].x === spaceshipPos)) {
-
+					//Falls das Spaceship getroffen wird, soll dem Nutzer den Verlierer-Screen angezeigt werden
 					renderStr = setCharsAt(renderStr, xyToStringPos(3, 20),
 						"██╗   ██╗ ██████╗ ██╗   ██╗    ██╗      ██████╗ ███████╗████████╗    ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗   "
 					)
@@ -337,7 +334,6 @@
 					renderStr = setCharsAt(renderStr, xyToStringPos(3, 25),
 						"   ╚═╝    ╚═════╝  ╚═════╝     ╚══════╝ ╚═════╝ ╚══════╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝"
 					)
-					//window.alert("You lost the game.")
 					pause = true;
 
 				}
@@ -349,8 +345,6 @@
 					if ((currentBulletsInvaders[bulletId].x >= obstacles[obstaclesId].x) &&
 						(currentBulletsInvaders[bulletId].x <= obstacles[obstaclesId].x + obstacles[obstaclesId].width) &&
 						(currentBulletsInvaders[bulletId].y === obstacles[obstaclesId].y + obstacles[obstaclesId].height)) {
-						// console.log("invader bullet hit obstacle")
-
 						currentBulletsInvaders.splice(bulletId, 1);
 					}
 			}
@@ -397,17 +391,16 @@
 						yoffset), invaders[i].appearance[
 						j
 					]);
-					//2 * width - x + xPos
 					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + widthInvader + xoffset,
 							heightInvader + j + yoffset),
 						invaders[i].appearance[j].split("").reverse().join(""));
 				}
 				invaders[i].y = yoffset;
 				invaders[i].x = spacing * (i + 1) - startPointRow +
-					xoffset; //--> für einen invader machen, nicht für ganze reihe
+					xoffset;
 			}
 		}
-		// Fubktion die eine Animation erzeugt, wenn der Invader abgetroffen wird
+		// Funktion die eine Animation erzeugt, wenn der Invader abgetroffen wird
 		function removeInvadersAnimation() {
 			for (let i = 0; i < invaders.length; i++) {
 				if (invaders[i].exploded != 0 && new Date().getTime() - invaders[i].exploded > 1) {
@@ -424,7 +417,7 @@
 			}
 		}
 
-		//Dazugehörige Zeit, um eine zufällige Reihenfolge zu generieren --> unvorhersehbar
+		//Dazugehörige Zeit, um eine zufällige Reihenfolge zu generieren --> unvorhersehbarer
 		function setupInvaderBulletTime() {
 			let max = 10;
 			let min = 5;
@@ -442,8 +435,8 @@
 		//Hauptrenderfunktion
 		function render() {
 
+			//pause dient dazu, dass in dem Spiel nach dem Verlierer/Gewinner-Screen ein neues Spiel gestartet werden kann
 			if (!pause) {
-
 
 				//Render Background
 				renderStr = renderBackground(rows, cols);

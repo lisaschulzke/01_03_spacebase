@@ -1,3 +1,4 @@
+//Sammlung der Eigenschaften der Invader
 class Invader {
   constructor(width, height, posX, posY, appearance, id) {
     this.width = widthInvader;
