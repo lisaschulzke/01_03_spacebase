@@ -44,7 +44,7 @@ Im nachfolgenden Absatz wird auf die wichtigen Funktionen des Projekts eingegang
 
 ### Zentrale Funktionen
 
-`generateInvaders()`: Eine Funktion die ein Array von Personen entgegennimmt, und diese dann im angegebenen Intervall Bier trinken lässt. Nach jedem Durchlauf durch das Biertrinken (durch Aufruf von drinkBeer mit einem neu erzeugten Bier-Objekt) wird überprüft, ob die Anzahl der betrunkenen Personen größer 0 ist. Wenn dies eintritt, wird das Intervall bei jedem Durchlauf auf die doppelte Länge verlängert. Die Funktion endet in ihrer Ausführung dann wenn alle Personen isDrunk = true zurückgeben, oder wenn das Interval größer als 1 Stunde wird. Wird die Funktion mit nur einer Person im Array aufgerufen, wird eine Warnmeldung ausgegeben, um versehentliches Trinken alleine zu vermeiden. 
+`generateInvaders()`: Diese Funktion erzeugt die Invader. Sie lässt den Invader erzeugen, indem der linke Teil des Invaders auf die andere Seite gespiegelt wird. In dieser Funktion wird eine Zufallszahl generiert und je nachdem, ob sie größer oder kleiner 0,5 ist, wird ein Hashtag abgebildet, so erhält man die zufällige Form, die bei jedem Invader anders ist. Dies wird fünf mal wiederholt, da die Höhe des Invaders auf 5 gesetzt wurde. So erhält man den Array InvaderLine, die wiederum von jeder Line des Invaders in InvaderLines gepushed wird. Alles zusammen generiert dann den Invader.
 
 `renderUI()`: Diese Funktion rendert die User Interface des Spiels. Diese Fubktion wurde hauptsächlich dafür angelegt, um den aktuellen Punktestand anzuzeigen, sowie auch den Window-alert, dass das Spiel gewonnen wurde.
 
