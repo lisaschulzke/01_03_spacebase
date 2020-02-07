@@ -25,7 +25,7 @@
 
 <body>
 	<audio id="music" loop muted="muted" autoplay="">
-			<source src="starwars.ogg" type="audio/ogg">
+			<source src="spacemusic.ogg" type="audio/ogg">
 	</audio>
 	<pre id="console">
   	<!-- Hier landet später der Output aus Javascript -->
@@ -201,6 +201,8 @@
 				if (level < 3) {
 					level++;
 				}
+			} else if (keyCode === 27) {
+				newGame();
 			}
 		}, false);
 
@@ -267,7 +269,7 @@
 				}
 			}*/
 		function renderBullets() {
-			//TODO: Prüfen ob eine Kugel einen Invader trifft, wenn ja Aktion auslösen und score hochzählen
+			//Prüfen ob eine Kugel einen Invader trifft, wenn ja Aktion auslösen und score hochzählen
 			for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
 				for (let spaceId = 0; spaceId < invaders.length; spaceId++) {
 					if ((currentBullets[bulletId].x >= invaders[spaceId].x) &&
@@ -282,7 +284,7 @@
 				}
 			}
 
-			//TODO:
+			//Prüfen, ob ein Bullet das Obstacle trifft
 			for (let bulletId = 0; bulletId < currentBullets.length; bulletId++) {
 				for (let obstaclesId = 0; obstaclesId < obstacles.length; obstaclesId++)
 					if ((currentBullets[bulletId].x >= obstacles[obstaclesId].x) &&
@@ -305,10 +307,9 @@
 
 		}
 
+		//rendert die Bullets von den Invader
 		function renderBulletsInvaders() {
 			for (let bulletId = 0; bulletId < currentBulletsInvaders.length; bulletId++) {
-				// console.log(currentBulletsInvaders[bulletId].x);
-				// console.log(currentBulletsInvaders[0].x);
 
 				//TODO: eine Toleranz hinzufügen, sodass das ganze Spaceship getroffen wird
 				if (currentBulletsInvaders[bulletId].y >= 47 && currentBulletsInvaders[bulletId].x === spaceshipPos) {
@@ -321,12 +322,14 @@
 				}
 			}
 
+			//Prüfen, ob die Bullets das Obstacle getroffen haben
 			for (let bulletId = 0; bulletId < currentBulletsInvaders.length; bulletId++) {
 				for (let obstaclesId = 0; obstaclesId < obstacles.length; obstaclesId++)
 					if ((currentBulletsInvaders[bulletId].x >= obstacles[obstaclesId].x) &&
 						(currentBulletsInvaders[bulletId].x <= obstacles[obstaclesId].x + obstacles[obstaclesId].width) &&
 						(currentBulletsInvaders[bulletId].y === obstacles[obstaclesId].y + obstacles[obstaclesId].height)) {
 						// console.log("invader bullet hit obstacle")
+
 						currentBulletsInvaders.splice(bulletId, 1);
 					}
 			}
@@ -342,9 +345,8 @@
 
 
 
-
+// Funktion um die Invader zu rendern, sodass sie sich auch von rechts nach links bzw. l nach r bewegen
 		function renderInvaders(invader, pos) {
-			//TODO Invaders rendern
 			run++
 			if (run >= 2) {
 				run = 0;
@@ -369,9 +371,6 @@
 			for (let i = 0; i < invaders.length; i++) {
 				for (let j = 0; j < invaders[i].appearance.length; j++) {
 
-					//Zeilenweise in String schreiben
-					//renderStr = setCharsAt(renderStr, xyToStringPos(posX, posY + i), spaceship[i]);
-					//Zeilenweise in String schreiben
 					renderStr = setCharsAt(renderStr, xyToStringPos(spacing * (i + 1) - startPointRow + xoffset, heightInvader +
 						j +
 						yoffset), invaders[i].appearance[
@@ -387,7 +386,7 @@
 					xoffset; //--> für einen invader machen, nicht für ganze reihe
 			}
 		}
-
+		// Fubktion die eine Animation erzeugt, wenn der Invader abgetroffen wird
 		function removeInvadersAnimation() {
 			for (let i = 0; i < invaders.length; i++) {
 				if (invaders[i].exploded != 0 && new Date().getTime() - invaders[i].exploded > 1) {
@@ -401,7 +400,7 @@
 				}
 			}
 		}
-
+		// zufällige Kanonenschüsse von den Invadern auf das Spaceship
 		function randomInvaderBullets() {
 
 			if (new Date().getTime() > randomBulletTime) {
@@ -410,6 +409,7 @@
 			}
 		}
 
+		//Dazugehörige Zeit, um eine zufällige Reihenfolge zu generieren --> unvorhersehbar
 		function setupInvaderBulletTime() {
 			let max = 10;
 			let min = 5;
@@ -451,7 +451,7 @@
 			//Remove exploded invaders
 			removeInvadersAnimation();
 
-			// TODO: comment
+			// Bullets von den Invadern auf das Spaceship rendern
 			randomInvaderBullets();
 
 			//Gesamtergebnis anzeigen
@@ -461,6 +461,7 @@
 		//Es geht los - alle 40 Millisekunden rendern
 		newGame();
 		setInterval(render, 40);
+		//Um Musik abspielen zu lassen
 		setTimeout(()=>{
 			audio.play();
 			audio.muted = false;
