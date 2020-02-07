@@ -25,14 +25,13 @@
 
 <body>
 	<audio id="music" loop muted="muted" autoplay="">
-			<source src="spacemusic.ogg" type="audio/ogg">
+		<source src="spacemusic.ogg" type="audio/ogg">
 	</audio>
 	<pre id="console">
   	<!-- Hier landet später der Output aus Javascript -->
   </pre>
 	<script src="classes.js"></script>
 	<script>
-
 		let renderStr = "";
 		let rows = 50;
 		let cols = 140;
@@ -57,6 +56,7 @@
 		let explode = " ";
 		let score = 0;
 		let obstaclesId = 0;
+		let pause = false;
 		let explosionInvader = ["   ||   ",
 			" //    ",
 			"||    ",
@@ -94,7 +94,7 @@
 			score = 0;
 			obstaclesId = 0;
 			invaderRow = 70;
-			
+
 			//TODO Invaders erzeugen und in Array (invaders) schreiben damit sie gerendet werden können
 			for (let i = 0; i < numInvader; i++) {
 				//const element = array[i];
@@ -203,6 +203,7 @@
 				}
 			} else if (keyCode === 27) {
 				newGame();
+				pause = false;
 			}
 		}, false);
 
@@ -220,6 +221,7 @@
 				newGame();
 			}
 		}
+
 
 		function renderBackground(rows, cols) {
 			//console.log("render "+cnt)
@@ -316,8 +318,27 @@
 					console.log("invader bullet hit spaceship");
 					if (showOnlyOnce) {
 						showOnlyOnce = false;
-						window.alert("You lose the level!");
-						newGame();
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 2),
+							"██╗   ██╗ ██████╗ ██╗   ██╗    ██╗      ██████╗ ███████╗████████╗    ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗   "
+							)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 3),
+							"╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║     ██╔═══██╗██╔════╝╚══██╔══╝    ╚══██╔══╝██║  ██║██╔════╝    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝   "
+							)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 4),
+							" ╚████╔╝ ██║   ██║██║   ██║    ██║     ██║   ██║███████╗   ██║          ██║   ███████║█████╗      ██║  ███╗███████║██╔████╔██║█████╗     "
+							)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 5),
+							"  ╚██╔╝  ██║   ██║██║   ██║    ██║     ██║   ██║╚════██║   ██║          ██║   ██╔══██║██╔══╝      ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝     "
+							)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 6),
+							"   ██║   ╚██████╔╝╚██████╔╝    ███████╗╚██████╔╝███████║   ██║          ██║   ██║  ██║███████╗    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██╗"
+							)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 7),
+							"   ╚═╝    ╚═════╝  ╚═════╝     ╚══════╝ ╚═════╝ ╚══════╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝"
+							)
+						//window.alert("You lost the game.")
+						pause = true;
+
 					}
 				}
 			}
@@ -345,7 +366,7 @@
 
 
 
-// Funktion um die Invader zu rendern, sodass sie sich auch von rechts nach links bzw. l nach r bewegen
+		// Funktion um die Invader zu rendern, sodass sie sich auch von rechts nach links bzw. l nach r bewegen
 		function renderInvaders(invader, pos) {
 			run++
 			if (run >= 2) {
@@ -427,47 +448,50 @@
 		//Hauptrenderfunktion
 		function render() {
 
-			//Render Background
-			renderStr = renderBackground(rows, cols);
+			if (!pause) {
 
-			//Render UI
-			renderUI();
 
-			//Render Obstacle
-			renderObstacles();
+				//Render Background
+				renderStr = renderBackground(rows, cols);
 
-			//Render Spaceship
-			renderSpaceship(spaceshipPos, rows - 3, renderStr);
+				//Render UI
+				renderUI();
 
-			//Render Invaders
-			renderInvaders(123456, 0, renderStr);
+				//Render Obstacle
+				renderObstacles();
 
-			//Render Bullets
-			renderBullets(renderStr);
+				//Render Spaceship
+				renderSpaceship(spaceshipPos, rows - 3, renderStr);
 
-			//Render Invader Bullets
-			renderBulletsInvaders();
+				//Render Invaders
+				renderInvaders(123456, 0, renderStr);
 
-			//Remove exploded invaders
-			removeInvadersAnimation();
+				//Render Bullets
+				renderBullets(renderStr);
 
-			// Bullets von den Invadern auf das Spaceship rendern
-			randomInvaderBullets();
+				//Render Invader Bullets
+				renderBulletsInvaders();
 
-			//Gesamtergebnis anzeigen
-			document.getElementById("console").innerText = renderStr;
+				//Remove exploded invaders
+				removeInvadersAnimation();
+
+				// Bullets von den Invadern auf das Spaceship rendern
+				randomInvaderBullets();
+
+				//Gesamtergebnis anzeigen
+				document.getElementById("console").innerText = renderStr;
+			}
 		}
+
 
 		//Es geht los - alle 40 Millisekunden rendern
 		newGame();
 		setInterval(render, 40);
 		//Um Musik abspielen zu lassen
-		setTimeout(()=>{
+		setTimeout(() => {
 			audio.play();
 			audio.muted = false;
-		},1000);
-		
-
+		}, 1000);
 	</script>
 </body>
 
