@@ -15,12 +15,16 @@ Bereits beim Laden der Seite durch aufrufen der HTML-file öffnet sich ein neues
 
 #### Steuerung Spaceship: 
 Pfeiltaste links: nach links bewegen
+
 Pfeiltaste rechts: nach rechts bewegen
+
 Leertaste: Bullets abfeuern
 
 #### Steuerung Spiel:
 esc: neues Spiel Starten
+
 Pfeiltaste hoch: höheres Level wählen
+
 Pfeiltaste unten: niedrigeres Level wählen
 
 ## Structure / Aufbau
@@ -61,7 +65,13 @@ Eine zentrale Funktion in der Datei ist die `render()`-Funktion, sie erstellt bz
 Während des Spielens bewegt der Nutzer das Spaceship durch drücken der rechten bzw. linken Pfeiltaste. Dies passiert durch die Komponenten keyCode, addEventListener `('keydown', (event) =>{}` und der SpaceshipPos. So wird auf der x-Achse einmal der Wert verringert durch drücken der Taste (links) und einmal erhöht (rechts). Durch drücken der Leertaste werden die Bullets abgefeuert. Dies passiert auch durch ein keydown-Event mit dem keyCode.
 Indem der Nutzer die Pfeiltaste oben drückt, spielt er ein Level höher, durch drücken der Pfeiltaste nach unten, ein Level niedriger. Dies passiert ebenfalls durch den KeyCode und dem keydown-Event. Dies ist zum einen mit der Funktion `setupInvaderBulletTime()` verbunden, sowie mit dem keydown-Event selbst, das hoch- bzw. runterzählt.
 
-Oben links in der Ecke ist zudem ein Zähler, der den Score des Nutzers zählt. Der Nutzer bekommt pro abgeschossenem Invader einen Punkt. Somit hängt der Zähler auch mit der Funktion zusammen, die für das Abschießen der Invader verantwortlich ist (`renderBullets()`).
+Oben links in der Ecke ist zudem ein Zähler, der den Score des Nutzers zählt. Der Nutzer bekommt pro abgeschossenem Invader einen Punkt. Somit hängt der Zähler auch mit der Funktion zusammen, die für das Abschießen der Invader verantwortlich ist (`renderBullets()`). Gleichzeitig können die Invader auch das Spaceship abschießen. Dies passiert zufällig durch die Funktion `setupInvaderBulletTime()`, die je nach Level eine höhere Intervallspanne oder eben eine kleinere Intervallspanne berechnet. Dies hängt dann wiederum auch mit der Auswahl des Levels zusammen.
+
+Nachdem alle Invader abgetroffen wurden, erscheint eine Nachricht auf dem Canvas mit "You won the game.". Dies wird durch die Funktion setCharsAt realisiert und gibt dem Nutzer somit die Info, dass er das Spiel gewonnen hat. Jetzt steht dem Nutzer auch die Möglichkeit bereit, ein neues Spiel zu beginnen durch Drücken der esc-Taste. Dies wird durch die pause-Variable mit der Zuweisung true / false gesteuert. Nachdem alle Invader abgetroffen wurden, erscheint eine Nachricht auf dem Canvas mit "You won the game.". Dies wird durch die Funktion `setCharsAt` realisiert und gibt dem Nutzer somit die Info, dass er das Spiel gewonnen hat. Jetzt steht dem Nutzer auch die Möglichkeit bereit, ein neues Spiel zu beginnen durch Drücken der esc-Taste. Dies wird durch die pause-Variable mit der Zuweisung true / false gesteuert. 
+
+
+Konträr dazu gibt es auch den Fall, dass der Nutzer das Spiel verliert und das Spaceship abgetroffen wurde. Dies passiert bislang allerdings nur, wenn ein Invaderbullet den (von links) ersten Hashtag des Ships trifft. Hierbei überprüft die Funktion `renderBulletsInvaders()` , ob die Invaderbullets das Spaceship treffen.
+Nachdem das Spaceship getroffen wurde, erscheint eine Nachricht auf dem Canvas mit "You lost the game.". Dies wird durch die Funktion `setCharsAt` realisiert, genau wie bei dem Gewinner-Fall ben auch und gibt dem Nutzer somit die Info, dass er das Spiel verloren hat. Jetzt steht dem Nutzer auch die Möglichkeit bereit, ein neues Spiel zu beginnen durch Drücken der esc-Taste. Dies wird, ebenfalls wie beim Fall des Gewinns, durch die pause-Variable mit der Zuweisung true / false gesteuert. 
 
 
 ## ToDos
