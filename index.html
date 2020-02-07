@@ -217,8 +217,27 @@
 			renderStr = setCharsAt(renderStr, xyToStringPos(5, 1), "Level: " + level);
 
 			if (score === 5) {
-				window.alert("You won the level!");
+				renderStr = setCharsAt(renderStr, xyToStringPos(3, 20),
+					"██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗ ██████╗ ███╗   ██╗    ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗   "
+					)
+				renderStr = setCharsAt(renderStr, xyToStringPos(3, 21),
+					"╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██╔═══██╗████╗  ██║    ╚══██╔══╝██║  ██║██╔════╝    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝   "
+					)
+				renderStr = setCharsAt(renderStr, xyToStringPos(3, 22),
+					" ╚████╔╝ ██║   ██║██║   ██║    ██║ █╗ ██║██║   ██║██╔██╗ ██║       ██║   ███████║█████╗      ██║  ███╗███████║██╔████╔██║█████╗     "
+					)
+				renderStr = setCharsAt(renderStr, xyToStringPos(3, 23),
+					"  ╚██╔╝  ██║   ██║██║   ██║    ██║███╗██║██║   ██║██║╚██╗██║       ██║   ██╔══██║██╔══╝      ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝     "
+					)
+				renderStr = setCharsAt(renderStr, xyToStringPos(3, 24),
+					"   ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝╚██████╔╝██║ ╚████║       ██║   ██║  ██║███████╗    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██╗"
+					)
+				renderStr = setCharsAt(renderStr, xyToStringPos(3, 25),
+					"   ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═══╝       ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝"
+					)
+				//window.alert("You won the level!");
 				newGame();
+				pause = true;
 			}
 		}
 
@@ -314,28 +333,29 @@
 			for (let bulletId = 0; bulletId < currentBulletsInvaders.length; bulletId++) {
 
 				//TODO: eine Toleranz hinzufügen, sodass das ganze Spaceship getroffen wird
-				if (currentBulletsInvaders[bulletId].y >= 47 && currentBulletsInvaders[bulletId].x === spaceshipPos) {
+				//const widthSpaceShip = Math.sqrt(Math.pow((fireBulletInvaders.posX + xoffset - (spaceshipPos + 3)), 2) + Math.pow((fireBulletInvaders.posY + yoffset - (rows - 2)), 2));
+				if (currentBulletsInvaders[bulletId].y >= 47 && (currentBulletsInvaders[bulletId].x === spaceshipPos)) {
 					console.log("invader bullet hit spaceship");
 					if (showOnlyOnce) {
 						showOnlyOnce = false;
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 2),
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 20),
 							"██╗   ██╗ ██████╗ ██╗   ██╗    ██╗      ██████╗ ███████╗████████╗    ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ███╗   ███╗███████╗   "
-							)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 3),
+						)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 21),
 							"╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║     ██╔═══██╗██╔════╝╚══██╔══╝    ╚══██╔══╝██║  ██║██╔════╝    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝   "
-							)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 4),
+						)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 22),
 							" ╚████╔╝ ██║   ██║██║   ██║    ██║     ██║   ██║███████╗   ██║          ██║   ███████║█████╗      ██║  ███╗███████║██╔████╔██║█████╗     "
-							)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 5),
+						)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 23),
 							"  ╚██╔╝  ██║   ██║██║   ██║    ██║     ██║   ██║╚════██║   ██║          ██║   ██╔══██║██╔══╝      ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝     "
-							)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 6),
+						)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 24),
 							"   ██║   ╚██████╔╝╚██████╔╝    ███████╗╚██████╔╝███████║   ██║          ██║   ██║  ██║███████╗    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██╗"
-							)
-						renderStr = setCharsAt(renderStr, xyToStringPos(3, 7),
+						)
+						renderStr = setCharsAt(renderStr, xyToStringPos(3, 25),
 							"   ╚═╝    ╚═════╝  ╚═════╝     ╚══════╝ ╚═════╝ ╚══════╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝"
-							)
+						)
 						//window.alert("You lost the game.")
 						pause = true;
 
